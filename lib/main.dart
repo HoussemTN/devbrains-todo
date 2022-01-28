@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/view/AddTasksView.dart';
 import 'package:todo/view/ListTasksView.dart';
 import 'provider/TaskModel.dart';
 void main() {
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes:  {
+        "listTasks":(context)=> ListTasksView(),
+        "addTask":(context)=> AddTasksView(),
+      },
       home: ListTasksView()
     );
   }
