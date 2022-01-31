@@ -15,6 +15,11 @@ class TaskModel extends ChangeNotifier {
     _todoTasks.add(_task);
     notifyListeners();
   }
+  int countTasksByDate(DateTime _datetime) => _todoTasks.where((task) =>
+  task.deadline.day== _datetime.day &&
+  task.deadline.month== _datetime.month &&
+  task.deadline.year== _datetime.year
+  ).length;
   void markAsDone(int index){
     _todoTasks[index].status=true;
     notifyListeners();

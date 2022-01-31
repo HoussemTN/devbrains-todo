@@ -52,14 +52,18 @@ class _AddTasksViewState extends State<AddTasksView> {
                       },
                       calendarBuilders: CalendarBuilders(
                           markerBuilder: (context, datetime, events) {
-                            return Container(
+                            return model.countTasksByDate(datetime) >0 ?Container(
                               width: 20,
                               height: 15,
                               decoration: BoxDecoration(
-                                  color: globals.primaries[1],
+                                  color: globals.primaries[model.countTasksByDate(datetime)],
                                   borderRadius: BorderRadius.circular(4.0)
                               ),
-                            );
+                              child: Center(
+                                child: Text(model.countTasksByDate(datetime).toString(),
+                                style: TextStyle(color: Colors.white)),
+                              ),
+                            ): Container();
                           },
                           selectedBuilder: (context, _datetime, focusedDay) {
                             return Container(
