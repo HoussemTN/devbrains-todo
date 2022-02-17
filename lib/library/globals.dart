@@ -16,3 +16,11 @@ const List<MaterialColor> primaries = <MaterialColor>[
   Colors.pink,
   Colors.red,
 ];
+
+const late='late';
+const today='today';
+const tomorrow='tomorrow';
+const thisWeek='thisWeek';
+const nextWeek='nextWeek';
+const thisMonth='thisMonth';
+const later='later';
