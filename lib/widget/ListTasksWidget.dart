@@ -11,12 +11,12 @@ class ListTasksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TaskModel>(
         builder: (context, model, child) {
-          return ListView.builder(
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
         itemCount:model.todoTasks[globals.later]!.length,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Container(
+            return Container(
               decoration: BoxDecoration(
                   color: Color(0xFFE2E2E2),
                   border: Border.all(
@@ -24,21 +24,23 @@ class ListTasksWidget extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: CheckboxListTile(
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
                 title: Text(model.todoTasks[globals.later]![index].title),
                 subtitle: Text(model.todoTasks[globals.later]![index].deadline.toString()),
-                value: model.todoTasks[globals.later]![index].status,
-                onChanged: (bool? value) {
-                  model.markAsDone(globals.later,index);
-                  print(model.todoTasks[globals.later]![index].status);
-                },
-                controlAffinity: ListTileControlAffinity.leading,
+                leading: Checkbox(
+                  value: model.todoTasks[globals.later]![index].status,
+                  onChanged: (bool? value) {
+                    model.markAsDone(globals.later,index);
+                    print(model.todoTasks[globals.later]![index].status);
+                  },
+                ),
               ),
-            ),
-          );
+            );
         },
 
-      );
+      ),
+          );
     }
     );
   }
