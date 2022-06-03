@@ -8,9 +8,9 @@ class TaskModel extends ChangeNotifier {
   final Map<String,List<Task>> _todoTasks = {
     globals.late:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
     globals.today:[Task("Today Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1))),Task("Today Task 2 ",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.tomorrow:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.thisWeek:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.nextWeek:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
+    globals.tomorrow:[Task("Tomorrow Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
+    globals.thisWeek:[Task(" thisWeek Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
+    globals.nextWeek:[Task("nextWeek Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
     globals.thisMonth:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
     globals.later:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
   };
