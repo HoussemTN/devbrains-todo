@@ -24,3 +24,4 @@ const thisWeek='thisWeek';
 const nextWeek='nextWeek';
 const thisMonth='thisMonth';
 const later='later';
+const Map<String,String>taskCategoryNames = {late:'Late',today:'Today',tomorrow:'Tomorrow',thisWeek:'This week',nextWeek:'Next Week',thisMonth:'This month',later:'Later'};
