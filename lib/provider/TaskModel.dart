@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:todo/model/Task.dart';
 import 'package:todo/library/globals.dart' as globals;
 import 'package:dart_date/dart_date.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskModel extends ChangeNotifier {
 
@@ -21,6 +23,7 @@ class TaskModel extends ChangeNotifier {
     String _key = guessTodoKeyFromDate(_task.deadline);
     if (_todoTasks.containsKey(_key)) {
       _todoTasks[_key]!.add(_task);
+      syncCache();
       notifyListeners();
     }
   }
@@ -61,6 +64,14 @@ class TaskModel extends ChangeNotifier {
     } else {
       return globals.later;
     }
+  }
+
+  void syncCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(globals.todoTasksKey, json.encode(_todoTasks));
+    final String? content = prefs.getString(globals.todoTasksKey);
+    print(content);
+
   }
 
 }
