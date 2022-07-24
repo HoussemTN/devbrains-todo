@@ -7,6 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskModel extends ChangeNotifier {
 
+  TaskModel(){
+    initSate();
+  }
+  void initSate(){
+    loadTasksFromCache();
+  }
   final Map<String,List<Task>> _todoTasks = {
     globals.late:[],
     globals.today:[],
@@ -23,7 +29,6 @@ class TaskModel extends ChangeNotifier {
     String _key = guessTodoKeyFromDate(_task.deadline);
     if (_todoTasks.containsKey(_key)) {
       _todoTasks[_key]!.add(_task);
-      addTaskToCache(_task);
       notifyListeners();
     }
   }
@@ -77,8 +82,19 @@ class TaskModel extends ChangeNotifier {
     }
     _tasksList.add(_task);
     await prefs.setString(globals.todoTasksKey, json.encode(_tasksList));
+  }
 
+  void loadTasksFromCache() async{
+    final prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey(globals.todoTasksKey)){
+      final String? data = prefs.getString(globals.todoTasksKey);
+      List<dynamic> _oldTasks= json.decode(data!);
+      List<Task> _tasksList = List<Task>.from(_oldTasks.map((element)=>Task.fromJson(element)));
+      for(int i=0;i<_tasksList.length;i++){
+        add(_tasksList[i]);
+      }
 
+    }
   }
 
 }
