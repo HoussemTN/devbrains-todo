@@ -8,13 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TaskModel extends ChangeNotifier {
 
   final Map<String,List<Task>> _todoTasks = {
-    globals.late:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.today:[Task("Today Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1))),Task("Today Task 2 ",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.tomorrow:[Task("Tomorrow Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.thisWeek:[Task(" thisWeek Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.nextWeek:[Task("nextWeek Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.thisMonth:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
-    globals.later:[Task("Task 1",false,"Create Provider",DateTime.now().add(Duration(days: 1)))],
+    globals.late:[],
+    globals.today:[],
+    globals.tomorrow:[],
+    globals.thisWeek:[],
+    globals.nextWeek:[],
+    globals.thisMonth:[],
+    globals.later:[],
   };
 
   Map<String, List<Task>> get todoTasks => _todoTasks;
@@ -23,7 +23,7 @@ class TaskModel extends ChangeNotifier {
     String _key = guessTodoKeyFromDate(_task.deadline);
     if (_todoTasks.containsKey(_key)) {
       _todoTasks[_key]!.add(_task);
-      syncCache();
+      addTaskToCache(_task);
       notifyListeners();
     }
   }
@@ -66,11 +66,18 @@ class TaskModel extends ChangeNotifier {
     }
   }
 
-  void syncCache() async {
+  void addTaskToCache(Task _task) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(globals.todoTasksKey, json.encode(_todoTasks));
-    final String? content = prefs.getString(globals.todoTasksKey);
-    print(content);
+    List<Task> _tasksList=[];
+    if(prefs.containsKey(globals.todoTasksKey)){
+      final String? data = prefs.getString(globals.todoTasksKey);
+      List<dynamic> _oldTasks= json.decode(data!);
+      _tasksList = List<Task>.from(_oldTasks.map((element)=>Task.fromJson(element)));
+      print(_tasksList);
+    }
+    _tasksList.add(_task);
+    await prefs.setString(globals.todoTasksKey, json.encode(_tasksList));
+
 
   }
 
