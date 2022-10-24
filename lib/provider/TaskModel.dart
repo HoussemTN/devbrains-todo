@@ -26,6 +26,7 @@ class TaskModel extends ChangeNotifier {
   Map<String, List<Task>> get todoTasks => _todoTasks;
 
   void add(Task _task) {
+    print("id: "+_task.id);
     String _key = guessTodoKeyFromDate(_task.deadline);
     if (_todoTasks.containsKey(_key)) {
       _todoTasks[_key]!.add(_task);
