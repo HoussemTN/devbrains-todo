@@ -3,6 +3,8 @@ import 'package:todo/provider/TaskModel.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/library/globals.dart' as globals;
 
+import '../model/Task.dart';
+
 class ListAllTasksWidget extends StatelessWidget {
   const ListAllTasksWidget({Key? key}) : super(key: key);
 
@@ -48,9 +50,13 @@ class ListAllTasksWidget extends StatelessWidget {
                                 .toString()),
                             leading: Checkbox(
                               value: model.todoTasks[key]![index].status,
-                              onChanged: (bool? value) {
-                                model.markAsDone(key, index);
-                                print(model.todoTasks[key]![index].status);
+                              onChanged: (bool? _isChecked) {
+                              if(_isChecked!) {
+                                Task _task = model.todoTasks[key]![index];
+                               // print(model.todoTasks[key]![index].status);
+                                  model.markAsChecked(key, index);
+                                 Future.delayed(Duration(seconds: 1),()=>{model.markAsDone(key, _task)});
+                              }
                               },
                             ),
                           ),

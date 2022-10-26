@@ -13,6 +13,7 @@ class TaskModel extends ChangeNotifier {
   void initSate(){
     loadTasksFromCache();
   }
+  final List<Task> _doneTasks = [];
   final Map<String,List<Task>> _todoTasks = {
     globals.late:[],
     globals.today:[],
@@ -24,6 +25,7 @@ class TaskModel extends ChangeNotifier {
   };
 
   Map<String, List<Task>> get todoTasks => _todoTasks;
+  List<Task> get doneTasks => _doneTasks;
 
   void add(Task _task) {
     print("id: "+_task.id);
@@ -47,10 +49,18 @@ class TaskModel extends ChangeNotifier {
     return 0;
   }
 
-  void markAsDone(String key, int index) {
+  void markAsDone(String key, Task _task) {
+    _doneTasks.add( _task);
+    _todoTasks[key]!.removeWhere((element) => element.id== _task.id);
+
+    print("Done Tasks:"+ _doneTasks.map((task) =>task.title ).toString());
+    notifyListeners();
+  }
+  void markAsChecked(String key, int index) {
     _todoTasks[key]![index].status = true;
     notifyListeners();
   }
+  
 
   String guessTodoKeyFromDate(DateTime deadline) {
     if (deadline.isPast && !deadline.isToday) {

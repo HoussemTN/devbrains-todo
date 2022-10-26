@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:todo/provider/TaskModel.dart';
 import 'package:flutter/material.dart';
 
+import '../model/Task.dart';
+
 class ListTasksByTabWidget extends StatelessWidget {
   final String tabKey;
   const ListTasksByTabWidget({Key? key,required this.tabKey}) : super(key: key);
@@ -32,9 +34,14 @@ class ListTasksByTabWidget extends StatelessWidget {
                   subtitle: Text(model.todoTasks[tabKey]![index].deadline.toString()),
                   leading: Checkbox(
                     value: model.todoTasks[tabKey]![index].status,
-                    onChanged: (bool? value) {
-                      model.markAsDone(tabKey,index);
-                      print(model.todoTasks[tabKey]![index].status);
+                    onChanged: (bool? _isChecked) {
+                      if(_isChecked!){
+                        Task _task = model.todoTasks[key]![index];
+                       // print(model.todoTasks[tabKey]![index].status);
+                        model.markAsChecked(tabKey,index);
+                        Future.delayed(Duration(seconds: 1),()=>  model.markAsDone(tabKey, _task));
+                      }
+
                     },
                   ),
                 ),
