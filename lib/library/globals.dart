@@ -28,3 +28,4 @@ const Map<String,String>taskCategoryNames = {late:'Late',today:'Today',tomorrow:
 
 // Shared Preferences Keys
 const todoTasksKey ="todo_tasks";
+const doneTasksKey ="done_tasks";
